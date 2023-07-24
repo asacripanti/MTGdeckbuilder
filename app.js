@@ -2,10 +2,11 @@ const cardNameInput = document.querySelector('#cardName');
 const cardNameButton = document.querySelector('#cardNameButton');
 const searchDisplay = document.querySelector('#searchDisplay');
 const deckDisplay = document.querySelector('#deckDisplay');
-const clearDeck = document.querySelector('#clearDeck');
+const deleteDeckBtn = document.querySelector('#deleteDeck')
 const deckName = document.querySelector('#deckName');
 const savedDecksDisplay = document.querySelector('#savedDecksDisplay')
 const saveDeckBtn = document.querySelector('#saveDeck')
+let currentDeckName = '';
 
 axios.defaults.baseURL = 'https://api.magicthegathering.io/v1';
 
@@ -80,34 +81,49 @@ function generateImg(card){
         const cardImg = document.createElement('IMG')
         cardImg.src = imageUrl;
         searchDisplay.appendChild(cardImg);
-        cardImg.addEventListener('click', () => {
-            if(!deck.includes(card)){
-                deck.push(card);
-                saveDeckToLocalStorage();
-              }
-              else {
-                  console.log('Card is in deck already!');
-              }
-        });   
-    }
-    else{
-        console.log('Card IMG URL not available.')
-    }
+       cardImgEvents();
+}
+}
+
+function cardImgEvents(){
+    cardImg.addEventListener('click', () => {
+        if(!deck.includes(card)){
+            deck.push(card);
+            saveDeckToLocalStorage();
+          }
+          else {
+              console.log('Card is in deck already!');
+          }
+    });   
+    console.log('Card IMG URL not available.')
+}
+    
+
+
+function removeCardFromDeck(){
+
 }
 
 function saveDeckToLocalStorage(){
     decks[deckName.value] = deck;
     localStorage.setItem('deck', JSON.stringify(deck));
     saveDecksToLocalStorage();
+    console.log(decks);
     
 }
 
-function resetDeck(){
-    deck = [];
-    saveDeckToLocalStorage();
-    displayDeck();
-}
+// function resetDeck(){
+//     deck = [];
+//     saveDeckToLocalStorage();
+//     displayDeck();
+// }
 
+function deleteDeck(deckName){
+    delete decks[deckName];
+    saveDeckToLocalStorage()
+    saveDecksToLocalStorage();
+    console.log(decks);
+}
 
 function pushtoDecks(){
     if (deckName.value!== "") {
@@ -137,6 +153,7 @@ function createDeckIcons(decks){
 function loadDeck(deckName){
     if (decks[deckName]) {
         deck = decks[deckName];
+        currentDeckName = deckName;
         displayDeck();
         saveDeckToLocalStorage();
       } else {
@@ -147,7 +164,9 @@ function loadDeck(deckName){
 saveDeckBtn.addEventListener('click', pushtoDecks);
 
 
-clearDeck.addEventListener('click',resetDeck);
+deleteDeckBtn.addEventListener('click', () => {
+    deleteDeck("");
+});
 
 
 deckDisplay.addEventListener('click', displayDeck);
