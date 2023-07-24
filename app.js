@@ -81,11 +81,14 @@ function generateImg(card){
         const cardImg = document.createElement('IMG')
         cardImg.src = imageUrl;
         searchDisplay.appendChild(cardImg);
-       cardImgEvents();
+        cardImgEvents(cardImg, card);
+}
+else{
+    console.log('Card IMG URL not available');
 }
 }
 
-function cardImgEvents(){
+function cardImgEvents(cardImg, card){
     cardImg.addEventListener('click', () => {
         if(!deck.includes(card)){
             deck.push(card);
@@ -95,14 +98,17 @@ function cardImgEvents(){
               console.log('Card is in deck already!');
           }
     });   
-    console.log('Card IMG URL not available.')
+   cardImg.addEventListener('dblclick', () => {
+    if(deck.includes(card)){
+        const cardIndex = deck.indexOf(card);
+        if(cardIndex > -1){
+            deck.splice(cardIndex, 1);
+            saveDeckToLocalStorage();
+        }
+     }
+   })
 }
     
-
-
-function removeCardFromDeck(){
-
-}
 
 function saveDeckToLocalStorage(){
     decks[deckName.value] = deck;
