@@ -7,8 +7,11 @@ const deckName = document.querySelector('#deckName');
 const savedDecksDisplay = document.querySelector('#savedDecksDisplay')
 const saveDeckBtn = document.querySelector('#saveDeck')
 let currentDeckName = '';
+let nextCardId = 1;
 
 axios.defaults.baseURL = 'https://api.magicthegathering.io/v1';
+// localStorage.clear();
+
 
 
 let decks = {};
@@ -16,19 +19,19 @@ let deck = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     const savedDeck = localStorage.getItem('deck');
-    const savedDecks = localStorage.getItem('decks');
+    // const savedDecks = localStorage.getItem('decks');
     if (savedDeck) {
       deck = JSON.parse(savedDeck);
       console.log(deck);
-      console.log(decks);
+      // console.log(decks);
       displayDeck(); // Display the deck after loading it from local storage
     }
 
-    if(savedDecks){
-        decks = JSON.parse(savedDecks);
-        createDeckIcons(decks);
-        console.log(decks);
-    }
+    // if(savedDecks){
+    //     decks = JSON.parse(savedDecks);
+    //     createDeckIcons(decks);
+    //     console.log(decks);
+    // }
   });
 
 function getCardByName(){
@@ -80,30 +83,35 @@ function generateImg(card){
         const imageUrl = card.imageUrl;
         const cardImg = document.createElement('IMG')
         cardImg.src = imageUrl;
-        searchDisplay.appendChild(cardImg);
         cardImgEvents(cardImg, card);
+        cardImg.setAttribute('data-card-id', nextCardId.toString()); // Convert the identifier to a string
+        nextCardId++;
+        searchDisplay.appendChild(cardImg);       
 }
 else{
     console.log('Card IMG URL not available');
 }
 }
 
+//THIS FUNCTION ALSO PUSHES CARD TO DECK
 function cardImgEvents(cardImg, card){
-    cardImg.addEventListener('click', () => {
+    cardImg.addEventListener('click', () => { 
         if(!deck.includes(card)){
-            deck.push(card);
-            saveDeckToLocalStorage();
-          }
-          else {
-              console.log('Card is in deck already!');
-          }
-    });   
-   cardImg.addEventListener('dblclick', () => {
+          deck.push(card);
+          saveDeckToLocalStorage();
+        }
+        else {
+            console.log('Card is in deck already!');
+        }
+      });
+
+   cardImg.addEventListener('contextmenu', () => {
     if(deck.includes(card)){
         const cardIndex = deck.indexOf(card);
         if(cardIndex > -1){
             deck.splice(cardIndex, 1);
             saveDeckToLocalStorage();
+            console.log('Card removed from deck!');
         }
      }
    })
@@ -111,11 +119,17 @@ function cardImgEvents(cardImg, card){
     
 
 function saveDeckToLocalStorage(){
-    decks[deckName.value] = deck;
+  // if(deckName.value!== ""){
+  //   decks[deckName.value] = deck;
     localStorage.setItem('deck', JSON.stringify(deck));
-    saveDecksToLocalStorage();
-    console.log(decks);
-    
+  //   saveDecksToLocalStorage();
+  //   console.log(decks);
+
+  // }else{
+  //   console.log('Please enter a deck name before saving.');
+  // } 
+
+
 }
 
 // function resetDeck(){
@@ -162,6 +176,7 @@ function loadDeck(deckName){
         currentDeckName = deckName;
         displayDeck();
         saveDeckToLocalStorage();
+        console.log(deckName);
       } else {
         console.log("Deck not found in local storage.");
       }
@@ -171,7 +186,7 @@ saveDeckBtn.addEventListener('click', pushtoDecks);
 
 
 deleteDeckBtn.addEventListener('click', () => {
-    deleteDeck("");
+    deleteDeck(`${currentDeckName}`);
 });
 
 
