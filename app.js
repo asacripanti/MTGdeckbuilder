@@ -4,8 +4,9 @@ const searchDisplay = document.querySelector('#searchDisplay');
 const deckDisplay = document.querySelector('#deckDisplay');
 const deleteDeckBtn = document.querySelector('#deleteDeck')
 const deckName = document.querySelector('#deckName');
-const savedDecksDisplay = document.querySelector('#savedDecksDisplay')
-const saveDeckBtn = document.querySelector('#saveDeck')
+const savedDecksDisplay = document.querySelector('#savedDecksDisplay');
+const saveDeckBtn = document.querySelector('#saveDeck');
+const resetDeckBtn = document.querySelector('#resetDeck');
 let currentDeckName = '';
 let nextCardId = 1;
 
@@ -24,7 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
       deck = JSON.parse(savedDeck);
       console.log(deck);
       // console.log(decks);
-      displayDeck(); // Display the deck after loading it from local storage
+      displayDeck();
+      updateDeckCount(); // Display the deck after loading it from local storage
     }
 
     // if(savedDecks){
@@ -83,6 +85,7 @@ function generateImg(card){
         const imageUrl = card.imageUrl;
         const cardImg = document.createElement('IMG')
         cardImg.src = imageUrl;
+        cardImg.classList.add('cardImg');
         cardImgEvents(cardImg, card);
         cardImg.setAttribute('data-card-id', nextCardId.toString()); // Convert the identifier to a string
         nextCardId++;
@@ -99,6 +102,7 @@ function cardImgEvents(cardImg, card){
         if(!deck.includes(card)){
           deck.push(card);
           saveDeckToLocalStorage();
+          updateDeckCount();
         }
         else {
             console.log('Card is in deck already!');
@@ -111,6 +115,7 @@ function cardImgEvents(cardImg, card){
         if(cardIndex > -1){
             deck.splice(cardIndex, 1);
             saveDeckToLocalStorage();
+            updateDeckCount();
             console.log('Card removed from deck!');
         }
      }
@@ -132,11 +137,11 @@ function saveDeckToLocalStorage(){
 
 }
 
-// function resetDeck(){
-//     deck = [];
-//     saveDeckToLocalStorage();
-//     displayDeck();
-// }
+function resetDeck(){
+    deck = [];
+    saveDeckToLocalStorage();
+    displayDeck();
+}
 
 function deleteDeck(deckName){
     delete decks[deckName];
@@ -182,13 +187,20 @@ function loadDeck(deckName){
       }
 }
 
-saveDeckBtn.addEventListener('click', pushtoDecks);
+function updateDeckCount(){
+  const deckCount = document.getElementById('deckCount');
+  deckCount.textContent = 'Cards: ' + deck.length;
+}
+
+// saveDeckBtn.addEventListener('click', pushtoDecks);
 
 
-deleteDeckBtn.addEventListener('click', () => {
-    deleteDeck(`${currentDeckName}`);
-});
+// deleteDeckBtn.addEventListener('click', () => {
+//     deleteDeck(`${currentDeckName}`);
+// });
 
 
 deckDisplay.addEventListener('click', displayDeck);
+
+resetDeckBtn.addEventListener('click', resetDeck);
 
