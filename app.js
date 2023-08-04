@@ -1,7 +1,7 @@
 const cardNameInput = document.querySelector('#cardName');
 const cardNameButton = document.querySelector('#cardNameButton');
 const searchDisplay = document.querySelector('#searchDisplay');
-const deckDisplay = document.querySelector('#deckDisplay');
+const deckDisplayBtn = document.querySelector('#deckDisplayBtn');
 const deleteDeckBtn = document.querySelector('#deleteDeck')
 const deckName = document.querySelector('#deckName');
 const savedDecksDisplay = document.querySelector('#savedDecksDisplay');
@@ -85,7 +85,7 @@ function generateImg(card){
         const imageUrl = card.imageUrl;
         const cardImg = document.createElement('IMG')
         cardImg.src = imageUrl;
-        cardImg.classList.add('cardImg');
+        // cardImg.classList.add('cardImg');
         cardImgEvents(cardImg, card);
         cardImg.setAttribute('data-card-id', nextCardId.toString()); // Convert the identifier to a string
         nextCardId++;
@@ -103,6 +103,10 @@ function cardImgEvents(cardImg, card){
           deck.push(card);
           saveDeckToLocalStorage();
           updateDeckCount();
+          cardImg.classList.add('cardGreen');
+          // setTimeout(() => {
+          //   cardImg.classList.remove('cardGreen');
+          // }, 1000);
         }
         else {
             console.log('Card is in deck already!');
@@ -116,6 +120,7 @@ function cardImgEvents(cardImg, card){
             deck.splice(cardIndex, 1);
             saveDeckToLocalStorage();
             updateDeckCount();
+            displayDeck();
             console.log('Card removed from deck!');
         }
      }
@@ -188,8 +193,8 @@ function loadDeck(deckName){
 }
 
 function updateDeckCount(){
-  const deckCount = document.getElementById('deckCount');
-  deckCount.textContent = 'Cards: ' + deck.length;
+  const count = document.querySelector('.counter');
+  count.textContent = deck.length;
 }
 
 // saveDeckBtn.addEventListener('click', pushtoDecks);
@@ -200,7 +205,7 @@ function updateDeckCount(){
 // });
 
 
-deckDisplay.addEventListener('click', displayDeck);
+deckDisplayBtn.addEventListener('click', displayDeck);
 
 resetDeckBtn.addEventListener('click', resetDeck);
 

@@ -1,9 +1,170 @@
-body {
+html, body {
+    background-color: black;
+    height: 100%;
+    margin: 0;
+   
+}
+
+#navContainer{
+    display: flex;
+    flex-direction: column; /* Stack contents vertically */
+    justify-content: center; /* Center contents vertically */
+    align-items: center; 
+}
+
+#mainContent{
+    background-image: url('images/aiDragonScapeOpacity1.png');
     background-color:#034748;
+    height: 100%;
+    max-width: 1900px;
+    margin: 0 auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#searchDisplay{
+    margin-top: 150px;
+    /* margin: 0 auto; */
+    /* background-image: url('images/aiDragonScape.png');
+    background-size: cover;
+    background-repeat: no-repeat; */
+}
+
+#navbar {
+    background-color: #310D20;
+    background-image: url('images/navbarDarkWizardOpacity.png');
+    background-size: 50% auto;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    position: fixed;
+    top: 0;
+    max-width: 1900px;
+    height: 150px;
+    width: 1900px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#navbarLeft {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+}
+
+#navbarCenter{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    
+}
+
+#buttonContainer{
+    display: flex;
+    justify-content: space-between;
+    width: 600px;
+    margin-top: 10px;
+}
+
+#navbarRight{
+    /* margin-left: 100px; */
+}
+
+.redDragon{
+    width: 200px;
+    height: 170px;
+}
+
+#deckDisplayBtn, #resetDeck{
+    position: relative;
+    /* background-color: #310D20; */
+    background-color: rgba(49, 13, 32, 0.5);
+    color: #B2ABF2;
+    border-color: #B2ABF2;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    letter-spacing: 0.1em;
+    font-weight: 400;
+    padding: 10px 30px;
+    transition: 0.5s; 
+    width: 250px;
+
+}
+
+#deckDisplayBtn:hover{
+    /* background-color: green; */
+    color: #71C9E8;
+    letter-spacing: 0.25em;
+    box-shadow: 0 0 35px #71C9E8;
+}
+
+#resetDeck:hover{
+    /* background-color: green; */
+    color: #F2CD5D;
+    letter-spacing: 0.25em;
+    box-shadow: 0 0 35px #F2CD5D;
+}
+
+#resetDeck{
+
+}
+
+#addCard{
+width: 600px;
+}
+
+#cardName{
+    width: 75%;
+    padding: 10px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background-color: rgba(49, 13, 32, 0.5);
+    border-radius: 25px 0 0 25px;
+    outline: none;
+    color: #B2ABF2;
+    font-size: 1em;
+
+}
+
+#cardNameButton{
+    position: relative;
+    border-radius: 0 25px 25px 0;
+    height: 40px;
+    width: 20%;
+    color: #B2ABF2;
+    /* background-color: #CE5374; */
+    background-color: rgba(49, 13, 32, 0.5);
+}
+
+#cardNameButton:hover{
+background-color: #35CE8D;
+transition: .5s;
+}
+
+#deckCount{
+    font-family: 'Handjet';
+    font-size: 50px;
+    color: greenyellow;
+}
+
+.counter{
+    color: purple;
+}
+
+.spanCardName{
+    position: absolute;
 }
 
 h1 {
-    color: #1481BA;
+    font-family: 'Handjet';
+    color: #B2ABF2;
+    font-size: 60px;
+    margin: 0;
 }
 
 .deckIcon{
@@ -11,18 +172,24 @@ h1 {
     height: 70px;
 }
 
-.cardInDeck{
+/* .cardInDeck{
     width: 340px;
-}
+} */
 
-.cardImg{
+img{
     width: 110px;
     margin: 10px;
 }
 
-.cardImg:hover{
+#searchDisplay img:hover{
     width: 250px;
     position: absolute;
     z-index: 1;
 }
+
+.cardGreen{
+    box-shadow: -10px 10px 5px green;
+    transition: box-shadow 1s ease;
+}
+
 
