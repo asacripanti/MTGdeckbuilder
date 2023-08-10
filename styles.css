@@ -41,10 +41,10 @@ html, body {
     top: 0;
     max-width: 1900px;
     height: 150px;
-    width: 1900px;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
 #navbarLeft {
@@ -55,12 +55,21 @@ html, body {
     margin: 0;
 }
 
+#navbarRight{
+    display: flex;
+    justify-content: center;
+}
+
+#navbarLeft, #navbarRight{
+    width: 260px;
+}
+
 #navbarCenter{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 600px;
+    width: 900px;
     
 }
 
@@ -191,5 +200,157 @@ img{
     box-shadow: -10px 10px 5px green;
     transition: box-shadow 1s ease;
 }
+
+
+@media(max-width: 1440px){
+    #navbarCenter{
+        width: 500px;
+    }
+    #navbar{
+        background-size: 600px 100%;
+    }
+    }
+
+@media(max-width: 1230px){
+    #navbar{
+        background-size: 500px 160px;
+    }
+    #buttonContainer{
+        width: 500px;
+    }
+    #addCard{
+        width: 500px;
+        display: flex;
+        justify-content: center;
+    }
+    #cardName{
+        width:60%;
+    }
+    #deckDisplayBtn, #resetDeck {
+        height: 38px;
+        width: 175px;
+        margin: 5px;
+        font-size: 17px;
+    }
+    #buttonContainer{
+        justify-content: center;
+    }
+    h1{
+        font-size: 50px;
+    }
+    #deckCount{
+        font-size: 40px;
+    }
+    .redDragon{
+        width: 175px;
+        height: 160px;
+    }
+} 
+
+@media(max-width: 930px){
+    h1{
+        font-size: 36px;
+    }
+    #deckCount{
+        font-size: 23px;
+    }
+    .redDragon{
+        width: 152px;
+        height: 138px;
+    }
+  
+}
+
+@media(max-width: 825px){
+    #navbarRight{
+        display: none;
+    }
+
+    #navbarCenter,#nav barLeft{
+        width: 30%;
+        justify-content: center;
+    }
+    #navbarCenter{
+        margin-left: 20px;
+    }
+    #cardName{
+        width: 30%;
+    }
+    #navbar{
+        background-size: 550px 160px;
+        justify-content: center;
+    }
+    #buttonContainer{
+        width: 240px;
+    } 
+    #deckDisplayBtn, #resetDeck {
+        width: 95px;
+        font-size: 14px;
+        text-align: center;
+        padding: 0;
+    }
+    #cardNameButton{
+        width: 12%;
+    } 
+    h1{
+        font-size: 54px;
+    }
+    #deckCount{
+        font-size: 50px;
+    } 
+}
+
+@media(max-width: 550px){
+    h1{
+        font-size: 44px;
+    }
+    #deckCount{
+        font-size: 40px;
+    } 
+    #navbar{
+        justify-content: space-between;
+    }
+    #navbarCenter, #navbarLeft{
+        width: 200px;
+    }
+    #cardName{
+        width: 20%;
+    }
+    #deckDisplayBtn, #resetDeck {
+        width: 75px;
+        
+    }
+}
+
+@media(max-width: 406px){
+    #buttonContainer{
+        width: 170px;
+    } 
+    #navbar{
+        flex-direction: column;
+    }
+    h1{
+        font-size: 34px;
+    }
+    #deckCount{
+        font-size: 30px;
+    } 
+    #cardName{
+        height: 10px;
+    }
+    #cardNameButton{
+        height: 30px;
+    }
+    #deckDisplayBtn, #resetDeck {
+        height: 30px;
+        
+    }
+
+}
+
+
+
+
+  
 
 
