@@ -7,3 +7,13 @@ class CardSearchForm(FlaskForm):
 
     name = StringField("Card Name", validators=[InputRequired()])
 
+class LoginForm(FlaskForm):
+    """Form that allows user to login with username"""
+
+    username = StringField("Username", validators=[InputRequired()])    
+
+class RegisterForm(FlaskForm):
+    """Form that allows user to create a username"""
+
+    username = StringField("Username", validators=[InputRequired()])    
+
