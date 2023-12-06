@@ -3,15 +3,16 @@
 from flask import Flask, render_template, request, url_for, session, redirect
 from flask_sqlalchemy import SQLAlchemy
 from forms import CardSearchForm, RegisterForm
-from models import db, Usernames
+from models import db, Usernames, connect_db
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "secret"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/deck_builder'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
 
+connect_db(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def home_page():
