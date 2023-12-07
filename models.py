@@ -3,14 +3,14 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-class Usernames(db.Model):
+class Username(db.Model):
 
-    __tablename__ = 'users'
+    __tablename__ = 'usernames'
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50))
 
-class Cards(db.Model):
+class Card(db.Model):
 
     __tablename__ = 'cards'
 
@@ -22,7 +22,7 @@ class Cards(db.Model):
     img_url = db.Column(db.String)
 
 
-class Decks(db.Model):
+class Deck(db.Model):
 
     __tablename__ = 'decks'
 
@@ -30,12 +30,12 @@ class Decks(db.Model):
     deck_name = db.Column(db.String(50), nullable=False)
     card_id = db.Column(db.Integer, db.ForeignKey('cards.id'))
 
-class User_Decks(db.Model):
+class User_Deck(db.Model):
 
     __tablename__ = 'user_decks'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('usernames.id'))
     deck_id = db.Column(db.Integer, db.ForeignKey('decks.id'))    
 
 

@@ -3,7 +3,8 @@
 from flask import Flask, render_template, request, url_for, session, redirect
 from flask_sqlalchemy import SQLAlchemy
 from forms import CardSearchForm, RegisterForm
-from models import db, Usernames, connect_db
+from models import db, Username, connect_db
+import requests 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "secret"
@@ -26,11 +27,27 @@ def home_page():
             # Access the form data using form.name.data
             card_name = form.name.data
             # Perform the API request using card_name
+            api_url = f'https://api.magicthegathering.io/v1/cards?name={card_name}'
+            params = {'name': card_name}
             print(f"Form submitted with card name: {card_name}")
+
+            try:
+                response = requests.get(api_url, params=params)
+                response.raise_for_status()  # Raise an error for bad responses (4xx or 5xx)
+                card_data = response.json().get('cards', [])
+
+                for card in card_data:
+                    print(f"Card Name: {card.get('name')}")
+                    print(f"Card Type: {card.get('type')}")
+                    print(f"Mana Cost: {card.get('manaCost')}")
+                    # Add more fields as needed
+
+            except requests.exceptions.RequestException as e:
+                print(f"Error making API request: {e}")
             # Additional actions can be added here
 
         # Render the home template with the form
-        return render_template('home.html', form=form)
+        return render_template('home.html', form=form, card_data=card_data)
     
     # If the user is not logged in, redirect to the register page
     else:
@@ -47,7 +64,7 @@ def register_user():
         try:
             username = form.username.data
 
-            new_user = Usernames(username=username)
+            new_user = Username(username=username)
 
             db.session.add(new_user)
 
