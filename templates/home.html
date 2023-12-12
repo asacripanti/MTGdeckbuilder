@@ -6,7 +6,7 @@
 <div class="deckContainer">
   <div class="deckTitleBtnShell">
     <h2>Decks</h2>
-    <form action="/deck" method="POST">
+    <form action="/" method="POST">
       {{form.hidden_tag() }}
       {% for field in form
       if field.widget.input_type != 'hidden' %}

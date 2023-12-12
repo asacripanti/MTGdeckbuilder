@@ -3,8 +3,9 @@
 from flask import Flask, render_template, request, url_for, session, redirect
 from flask_sqlalchemy import SQLAlchemy
 from forms import CardSearchForm, RegisterForm, CreateDeckForm
-from models import db, Username, connect_db, User_Deck
+from models import db, Username, connect_db, User_Deck, Deck
 import requests 
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "secret"
@@ -13,10 +14,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # db = SQLAlchemy(app)
 
+migrate = Migrate(app, db)
+
 connect_db(app)
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home_page():
     """homepage two"""
 
@@ -30,7 +33,7 @@ def home_page():
     if form.validate_on_submit():
         deck_name = form.name.data
 
-        new_deck = Deck(deck_name=name)
+        new_deck = Deck(deck_name=deck_name)
 
         db.session.add(new_deck)
 
@@ -68,6 +71,10 @@ def register_user():
 def deck_display():
     """Overview of deck"""   
     form = CardSearchForm()
+
+    if request.method == 'POST':
+        print("Form submitted!")
+        print(f"Form data: {request.form}")
 
     
 
