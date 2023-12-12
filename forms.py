@@ -17,3 +17,9 @@ class RegisterForm(FlaskForm):
 
     username = StringField("Username", validators=[InputRequired()])    
 
+
+class CreateDeckForm(FlaskForm):
+    """Form for creating new deck"""
+
+    name = StringField("New Deck", validators=[InputRequired()])    
+

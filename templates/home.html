@@ -3,41 +3,37 @@
 {% block title %} Home {% endblock %}
 
 {% block content %}
-<div class="header">
-    <div class="headerLeft">
-
-    </div>
-    <div class="headerCenter">
-        <form action="/" method="POST">
-            {{form.hidden_tag() }}
-            {% for field in form
-            if field.widget.input_type != 'hidden' %}
-            <p>
-                {{field.label}}
-                {{field}}
-        
-                {% for err in field.errors %} 
-                {{err}}
-                {% endfor %}
-            </p>
-        
-            {% endfor %}
-            <button type="submit">Submit</button>
-        </form>
-    </div>
-    <div class="headerRight">
-
-    </div>
-</div>
-<div class="cardDisplay">
-    {% if card_data %}
-    <h2>Search Results</h2>
-    <div id="search-results">
-      {% for card in card_data %}
-        <img src="{{ card.imageUrl }}" alt="{{ card.name }}" class="cardImg">
+<div class="deckContainer">
+  <div class="deckTitleBtnShell">
+    <h2>Decks</h2>
+    <form action="/deck" method="POST">
+      {{form.hidden_tag() }}
+      {% for field in form
+      if field.widget.input_type != 'hidden' %}
+          <p>
+              {{field.label}}
+              {{field}}
+          
+              {% for err in field.errors %} 
+              {{err}}
+              {% endfor %}
+           </p>
+          
       {% endfor %}
+          <button type="submit">Submit</button>
+  </form>
+  </div>
+  <section class="deckList">
+    <div class="deckNames"> 
+      <h2>Name</h2>
     </div>
-  {% endif %}   
+    <div class="deckStats"> 
+      <h2>Stats</h2>
+    </div>
+  </section>
+</div>
+<div class="rotatingDisplay">
+
 
 </div>
 

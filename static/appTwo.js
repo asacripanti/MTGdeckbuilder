@@ -1,13 +1,21 @@
 document.addEventListener('DOMContentLoaded', function () {
     const cardImg = document.querySelectorAll('.cardImg')
-    const cardDisplay = document.querySelector('.cardDisplay');
+    const searchDisplay = document.querySelector('.searchDisplay');
+    const testDeck = document.querySelector('.testDeck');
+    const searchResults = document.querySelector('.searchResults');
 
 
-    cardDisplay.addEventListener('click', function(event) {
-        if (event.target.classList.contains('cardImg')) {
-            console.log('Clicked!');
-        }
+    // cardImg.addEventListener('click', function(event) {
+    //     if (event.target.classList.contains('cardImg')) {
+    //         console.log('Clicked!');
+    //     }
+    // });
+
+    testDeck.addEventListener('click', function () {
+        window.location.href = 'http://127.0.0.1:5000/deck';
     });
+
+
 
 });
 

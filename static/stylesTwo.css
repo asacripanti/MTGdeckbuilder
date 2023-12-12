@@ -1,0 +1,23 @@
+.testDeck{
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    
+}
+
+.deckContainer{
+    border: solid 1px gray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 500px;
+}
+
+.deckNames, .deckStats{
+    border: solid 1px rebeccapurple;
+    width: 200px;
+}
+
+.deckList{
+    display: flex;
+}

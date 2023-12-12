@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+<form action="/" method="POST">
+    {{form.hidden_tag() }}
+    {% for field in form
+    if field.widget.input_type != 'hidden' %}
+        <p>
+            {{field.label}}
+            {{field}}
+        
+            {% for err in field.errors %} 
+            {{err}}
+            {% endfor %}
+         </p>
+        
+    {% endfor %}
+        <button type="submit">Submit</button>
+</form>
+<div class="searchDisplay">
+    {% if card_data %}
+    <h2>Search Results</h2>
+    <section class="searchResults">
+      {% for card in card_data %}
+        <img src="{{ card.imageUrl }}" alt="{{ card.name }}" class="cardImg">
+      {% endfor %}
+    </section>
+  {% endif %}   
+</div>
+

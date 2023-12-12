@@ -2,8 +2,8 @@
 
 from flask import Flask, render_template, request, url_for, session, redirect
 from flask_sqlalchemy import SQLAlchemy
-from forms import CardSearchForm, RegisterForm
-from models import db, Username, connect_db
+from forms import CardSearchForm, RegisterForm, CreateDeckForm
+from models import db, Username, connect_db, User_Deck
 import requests 
 
 app = Flask(__name__)
@@ -15,10 +15,71 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 connect_db(app)
 
-@app.route('/', methods=['GET', 'POST'])
-def home_page():
-    """Home page with card search form"""
 
+@app.route('/')
+def home_page():
+    """homepage two"""
+
+    form = CreateDeckForm()
+
+
+    if 'logged_in' not in session:
+        return redirect(url_for('register_user'))
+
+
+    if form.validate_on_submit():
+        deck_name = form.name.data
+
+        new_deck = Deck(deck_name=name)
+
+        db.session.add(new_deck)
+
+        db.session.commit()
+
+    return render_template('home.html', form=form)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register_user():
+    """Create username or log in if not signed in"""
+
+    form = RegisterForm()
+
+    if form.validate_on_submit():
+        try:
+            username = form.username.data
+
+            new_user = Username(username=username)
+
+            db.session.add(new_user)
+
+            db.session.commit()
+
+            session['logged_in'] = True
+            session['username'] = username
+
+        finally:
+            db.session.close()
+
+    return render_template('register.html', form=form)    
+
+
+@app.route('/deck', methods=['GET', 'POST'])
+def deck_display():
+    """Overview of deck"""   
+    form = CardSearchForm()
+
+    
+
+    # Render the home template with the form
+    return render_template('Deck.html', form=form)
+    
+   
+
+@app.route('/search', methods=['GET', 'POST'])
+def card_search():
+    """Route that sends user to form for card search"""
+    
     form = CardSearchForm()
 
     if session.get('logged_in'):
@@ -47,36 +108,15 @@ def home_page():
             # Additional actions can be added here
 
         # Render the home template with the form
-        return render_template('home.html', form=form, card_data=card_data)
+        return render_template('Deck.html', form=form, card_data=card_data)
     
     # If the user is not logged in, redirect to the register page
     else:
         return redirect(url_for('register_user'))
 
 
-@app.route('/register', methods=['GET', 'POST'])
-def register_user():
-    """Create username or log in if not signed in"""
 
-    form = RegisterForm()
-
-    if form.validate_on_submit():
-        try:
-            username = form.username.data
-
-            new_user = Username(username=username)
-
-            db.session.add(new_user)
-
-            db.session.commit()
-
-            session['logged_in'] = True
-            session['username'] = username
-
-        finally:
-            db.session.close()
-
-    return render_template('register.html', form=form)    
+    
         
 
 
