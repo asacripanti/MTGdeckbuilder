@@ -35,8 +35,10 @@ class Deck_Card(db.Model):
     __tablename__ = 'deck_cards'   
 
     id = db.Column(db.Integer, primary_key=True)
-    deck_id = db.Column(db.Integer, db.ForeignKey('decks.id'))
+    user_deck_id = db.Column(db.Integer, db.ForeignKey('user_decks.id'))
     card_id = db.Column(db.Integer, db.ForeignKey('cards.id'))      
+
+    user_deck = db.relationship('User_Deck', backref='deck_cards')
     
 
 class User_Deck(db.Model):
@@ -45,7 +47,13 @@ class User_Deck(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('usernames.id'))
-    deck_card_id = db.Column(db.Integer, db.ForeignKey('deck_cards.id'))
+    deck_id = db.Column(db.Integer, db.ForeignKey('decks.id'))
+    
+
+
+    user = db.relationship('Username', foreign_keys=[user_id], backref='user_decks')
+    deck = db.relationship('Deck', foreign_keys=[deck_id], backref='user_decks')
+
 
 
 def connect_db(app):

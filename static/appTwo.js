@@ -1,22 +1,54 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const cardImg = document.querySelectorAll('.cardImg')
+    const cardImgs = document.querySelectorAll('.cardImg')
     const searchDisplay = document.querySelector('.searchDisplay');
     const testDeck = document.querySelector('.testDeck');
     const searchResults = document.querySelector('.searchResults');
+    
+    const deck = [];
+
+    cardImgs.forEach(function (cardImg) {
+        cardImg.addEventListener('click', function (event) {
+            if (event.target.classList.contains('cardImg')) {
+                // const detailApiUrl = `https://api.magicthegathering.io/v1/cards?name=${cardName}`;
+                const cardName = cardImg.alt;
+                const cardType = cardImg.dataset.type;
+                const cardColor = cardImg.dataset.color;
+                const cmc = parseInt(cardImg.dataset.cmc);
+                const imgUrl = cardImg.src;
+
+                const cardObject = {
+                    name: cardName,
+                    type: cardType,
+                    colors: cardColor,
+                    cmc: cmc,
+                    img: imgUrl
+
+                }
+
+                deck.push(cardObject);
+                console.log('Clicked!');
+                console.log(deck);
 
 
-    // cardImg.addEventListener('click', function(event) {
-    //     if (event.target.classList.contains('cardImg')) {
-    //         console.log('Clicked!');
-    //     }
-    // });
-
-    testDeck.addEventListener('click', function () {
-        window.location.href = 'http://127.0.0.1:5000/deck';
+                fetch('/add_card', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(cardObject),
+                  })
+                    .then(response => response.json())
+                    .then(data => {
+                      console.log(data.message); // Log the server response message
+                    })
+                    .catch(error => {
+                      console.error('Error:', error);
+                    });
+                
+    
+            }
+        });
     });
-
-
-
 });
 
 
@@ -26,15 +58,3 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-// cardImg.forEach(cardImg => {
-//     cardImg.addEventListener('click', function(){
-//         console.log('Clicked!');
-//     })
-// })
-
-
-// cardDisplay.addEventListener('click', function(event) {
-//     if (event.target.classList.contains('cardImg')) {
-//         console.log('Clicked!');
-//     }
-// });

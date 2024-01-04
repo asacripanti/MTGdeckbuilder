@@ -1,9 +1,10 @@
 """MTG deck builder APP"""
 
-from flask import Flask, render_template, request, url_for, session, redirect
+from flask import Flask, render_template, request, url_for, session, redirect, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from forms import CardSearchForm, RegisterForm, CreateDeckForm
-from models import db, Username, connect_db, User_Deck, Deck
+from forms import CardSearchForm, RegisterForm, CreateDeckForm, LoginForm
+from models import db, Username, connect_db, User_Deck, Deck, Card
+from services import get_user_id
 import requests 
 from flask_migrate import Migrate
 
@@ -25,21 +26,41 @@ def home_page():
 
     form = CreateDeckForm()
 
-
     if 'logged_in' not in session:
         return redirect(url_for('register_user'))
 
+    username = session.get('username')
+    user_id = session.get('user_id')    
+    deck_id = None
+
 
     if form.validate_on_submit():
+
         deck_name = form.name.data
 
         new_deck = Deck(deck_name=deck_name)
 
         db.session.add(new_deck)
-
         db.session.commit()
 
-    return render_template('home.html', form=form)
+        deck_id = new_deck.id
+
+        user_deck = User_Deck(user_id=user_id, deck_id=deck_id)
+
+        db.session.add(user_deck)
+        db.session.commit()
+
+    user_decks_query = (
+        db.session.query(User_Deck)
+        .join(Deck, User_Deck.deck)
+        .filter(User_Deck.user_id == user_id)
+    )    
+    user_decks_result = user_decks_query.all()
+    print(str(user_decks_query))
+    deck_names = [user_deck.deck.deck_name for user_deck in user_decks_query]
+    print("Deck Names:", deck_names)
+            
+    return render_template('home.html', form=form, username=username, user_id=user_id, deck_id=deck_id, deck_names=deck_names)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -51,35 +72,59 @@ def register_user():
     if form.validate_on_submit():
         try:
             username = form.username.data
-
             new_user = Username(username=username)
 
             db.session.add(new_user)
-
             db.session.commit()
+
+            user_id = new_user.id
 
             session['logged_in'] = True
             session['username'] = username
+            session['user_id'] = user_id
 
         finally:
-            db.session.close()
+                db.session.close()
+                return redirect(url_for('home_page'))
 
-    return render_template('register.html', form=form)    
+    return render_template('register.html', form=form) 
+   
+
+      
 
 
-@app.route('/deck', methods=['GET', 'POST'])
-def deck_display():
-    """Overview of deck"""   
-    form = CardSearchForm()
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    """Allows user to login"""
 
-    if request.method == 'POST':
-        print("Form submitted!")
-        print(f"Form data: {request.form}")
+    form = LoginForm()
 
-    
+    if form.validate_on_submit():
+        username = form.username.data
+        user_id = get_user_id(username)
+        print(f"here is your username {username}")
 
+        if user_id is not None:
+            session['logged_in'] = True
+            session['username'] = username
+            session['user_id'] = user_id
+            return redirect(url_for('home_page'))
+        else:
+            flash('Invalid username. Please try again.', 'error')
+            
+    return render_template('login.html', form=form)    
+
+
+
+
+           
+
+
+@app.route('/deck/<deck_name>')
+def deck_display(deck_name):
+    """Overview of deck"""  
     # Render the home template with the form
-    return render_template('Deck.html', form=form)
+    return render_template('Deck.html')
     
    
 
@@ -90,6 +135,7 @@ def card_search():
     form = CardSearchForm()
 
     if session.get('logged_in'):
+        card_data = []
         # Check if the form is submitted
         if form.validate_on_submit():
             # Access the form data using form.name.data
@@ -108,6 +154,8 @@ def card_search():
                     print(f"Card Name: {card.get('name')}")
                     print(f"Card Type: {card.get('type')}")
                     print(f"Mana Cost: {card.get('manaCost')}")
+                    print(f"Color: {card.get('colorIdentity')}")
+                    print(card_data)
                     # Add more fields as needed
 
             except requests.exceptions.RequestException as e:
@@ -115,11 +163,37 @@ def card_search():
             # Additional actions can be added here
 
         # Render the home template with the form
-        return render_template('Deck.html', form=form, card_data=card_data)
+        return render_template('search.html', form=form, card_data=card_data)
     
     # If the user is not logged in, redirect to the register page
     else:
         return redirect(url_for('register_user'))
+
+
+@app.route('/add_card', methods=['POST'])
+def add_card():
+    """route that pushes data from JS to DB"""        
+    card_data = request.json
+
+    new_card = Card(
+        card_name=card_data['name'],
+        card_type=card_data['type'],
+        color=card_data['colors'],
+        cmc=int(card_data['cmc']),
+        img_url=card_data['img']
+    )
+    db.session.add(new_card)
+    db.session.commit()
+
+    return jsonify({'message': 'Card added successfully'})
+
+
+@app.route('/logout')
+def logout():
+    """Clears session and logs user out"""
+
+    session.clear()
+    return redirect(url_for('home_page'))        
 
 
 

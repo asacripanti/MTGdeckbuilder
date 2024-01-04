@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
-<form action="/" method="POST">
+{% block content %}
+<h1>SEARCH ROUTE</h1>
+<form action="{{ url_for('card_search') }}" method="POST">
     {{form.hidden_tag() }}
     {% for field in form
     if field.widget.input_type != 'hidden' %}
@@ -21,9 +23,11 @@
     <h2>Search Results</h2>
     <section class="searchResults">
       {% for card in card_data %}
-        <img src="{{ card.imageUrl }}" alt="{{ card.name }}" class="cardImg">
+        <img src="{{ card.imageUrl }}" alt="{{ card.name }}" data-type="{{ card.type }}" data-cmc="{{ card.cmc }}" data-color="{{ card.colorIdentity }}" class="cardImg">
       {% endfor %}
     </section>
   {% endif %}   
 </div>
+
+{% endblock %}
 
