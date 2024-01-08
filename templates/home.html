@@ -31,8 +31,14 @@
       {% if deck_names %}
         <h2>Your Decks:</h2>
         <ul>
-            {% for deck_name in deck_names %}
-              <li><a href="{{ url_for('deck_display', deck_name=deck_name) }}">{{ deck_name }}</a></li>
+            {% for user_deck in user_deck_result %}
+              <li>
+                <a class="deck-link" data-deck-id="{{ user_deck.deck.id }}" 
+                 href="{{ url_for('deck_display', deck_id=user_deck.deck.id) }}">
+                 {{ user_deck.deck.deck_name }}
+                </a>
+            </li>
+      
             {% endfor %}
         </ul>
     {% endif %}

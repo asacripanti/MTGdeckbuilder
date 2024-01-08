@@ -1,10 +1,28 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const deckLinks = document.querySelectorAll('.deck-link');
     const cardImgs = document.querySelectorAll('.cardImg')
     const searchDisplay = document.querySelector('.searchDisplay');
     const testDeck = document.querySelector('.testDeck');
     const searchResults = document.querySelector('.searchResults');
     
     const deck = [];
+
+    deckLinks.forEach(function (deckLink) {
+        deckLink.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            // Extract the deck ID from the data attribute
+            const deckId = deckLink.dataset.deckId;
+
+            const url = `/deck/${deckId}`;
+
+            // Navigate to the URL
+            window.location.href = url;
+
+            // Now you can use the deckId in your logic
+            console.log('Clicked on deck with ID:', deckId);
+        });
+    });
 
     cardImgs.forEach(function (cardImg) {
         cardImg.addEventListener('click', function (event) {

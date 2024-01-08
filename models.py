@@ -38,6 +38,7 @@ class Deck_Card(db.Model):
     user_deck_id = db.Column(db.Integer, db.ForeignKey('user_decks.id'))
     card_id = db.Column(db.Integer, db.ForeignKey('cards.id'))      
 
+    card = db.relationship('Card', backref='deck_cards')
     user_deck = db.relationship('User_Deck', backref='deck_cards')
     
 

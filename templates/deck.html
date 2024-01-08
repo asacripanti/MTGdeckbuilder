@@ -2,10 +2,9 @@
 
 {% block content %}
 <div class="deckDisplay">
-    <span>TEST</span>
+    {% for deck_card in deck_cards %}
+        <img src="{{ deck_card.card.img_url }}" alt="{{ deck_card.card.card_name }}">
+    {% endfor %}    
 </div>
 <a href="{{ url_for('card_search') }}">Search for new cards!</a>
-
-
-
 {% endblock %}

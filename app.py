@@ -3,7 +3,7 @@
 from flask import Flask, render_template, request, url_for, session, redirect, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from forms import CardSearchForm, RegisterForm, CreateDeckForm, LoginForm
-from models import db, Username, connect_db, User_Deck, Deck, Card
+from models import db, Username, connect_db, User_Deck, Deck, Card, Deck_Card
 from services import get_user_id
 import requests 
 from flask_migrate import Migrate
@@ -52,7 +52,7 @@ def home_page():
 
     user_decks_query = (
         db.session.query(User_Deck)
-        .join(Deck, User_Deck.deck)
+        .join(Deck, User_Deck.deck_id == Deck.id)
         .filter(User_Deck.user_id == user_id)
     )    
     user_decks_result = user_decks_query.all()
@@ -60,7 +60,7 @@ def home_page():
     deck_names = [user_deck.deck.deck_name for user_deck in user_decks_query]
     print("Deck Names:", deck_names)
             
-    return render_template('home.html', form=form, username=username, user_id=user_id, deck_id=deck_id, deck_names=deck_names)
+    return render_template('home.html', form=form, username=username, user_id=user_id, deck_id=deck_id, deck_names=deck_names, user_deck_result=user_decks_result)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -90,9 +90,6 @@ def register_user():
     return render_template('register.html', form=form) 
    
 
-      
-
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """Allows user to login"""
@@ -116,15 +113,21 @@ def login():
 
 
 
-
-           
-
-
-@app.route('/deck/<deck_name>')
-def deck_display(deck_name):
+@app.route('/deck/<int:deck_id>')
+def deck_display(deck_id):
     """Overview of deck"""  
     # Render the home template with the form
-    return render_template('Deck.html')
+
+    session['deck_id'] = deck_id
+    user_id = session.get('user_id')
+
+    user_deck = User_Deck.query.filter_by(user_id=user_id, deck_id=deck_id).first()
+
+    if user_deck:
+        deck_cards = Deck_Card.query.filter_by(user_deck_id=user_deck.id).all()
+        
+
+    return render_template('Deck.html', deck_cards=deck_cards)
     
    
 
@@ -183,6 +186,16 @@ def add_card():
         img_url=card_data['img']
     )
     db.session.add(new_card)
+    db.session.commit()
+
+    user_id = session['user_id']
+
+    deck_id = session.get('deck_id')
+
+    user_deck = User_Deck.query.filter_by(user_id=user_id, deck_id=deck_id).first()
+    deck_card = Deck_Card(user_deck_id=user_deck.id, card_id=new_card.id)
+
+    db.session.add(deck_card)
     db.session.commit()
 
     return jsonify({'message': 'Card added successfully'})
