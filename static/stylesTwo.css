@@ -11,6 +11,7 @@
     flex-direction: column;
     align-items: center;
     height: 500px;
+    background-color: #E3655B;
 }
 
 .deckNames, .deckStats{
@@ -20,4 +21,9 @@
 
 .deckList{
     display: flex;
+}
+
+.rotatingDisplay{
+    height: 40px;
+    background-color: red;
 }
