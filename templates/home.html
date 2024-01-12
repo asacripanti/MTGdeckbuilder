@@ -3,17 +3,24 @@
 {% block title %} Home {% endblock %}
 
 {% block content %}
+<section class="homeHeader">
+  <div class="headerImg"></div>
+  <div class="headerTextShell">
+    <h1 class="homeTitle">MTG Deck Builder</h1>
+    <span class="headerDesc">Customize your own Magic the gathering deck</span>
+    <br>
+    <span class="headerDesc">Create your deck, then search for cards to add and save to your deck</span>
+  </div>
+</section>
 <div class="deckContainer">
-  <p>Welcome, {{ username }}! Your user ID is {{ user_id }}.</p>
-  <div class="deckTitleBtnShell">
-    <h2>Decks</h2>
-    <form action="/" method="POST">
+  <p>Welcome, {{ username }}! Your user ID is {{ user_id }}. <a href="{{ url_for('logout') }}">Logout</a></p>
+    <form class="deckForm" action="/" method="POST">
       {{form.hidden_tag() }}
       {% for field in form
       if field.widget.input_type != 'hidden' %}
           <p>
               {{field.label}}
-              {{field}}
+              {{ field(placeholder='Deck name') }}
           
               {% for err in field.errors %} 
               {{err}}
@@ -22,30 +29,21 @@
           
       {% endfor %}
           <button type="submit">Submit</button>
-  </form>
-  <a href="{{ url_for('logout') }}">Logout</a>
-  </div>
+    </form>
+  <img src="/../images/dragon.png" alt="">
   <section class="deckList">
-    <div class="deckNames"> 
-      <h2>Name</h2>
-      {% if deck_names %}
-        <h2>Your Decks:</h2>
-        <ul>
+    {% if deck_names %}
             {% for user_deck in user_deck_result %}
-              <li>
-                <a class="deck-link" data-deck-id="{{ user_deck.deck.id }}" 
-                 href="{{ url_for('deck_display', deck_id=user_deck.deck.id) }}">
-                 {{ user_deck.deck.deck_name }}
-                </a>
-            </li>
-      
+                <div class="deck-link" data-deck-id="{{ user_deck.deck.id }}">
+                  <img class="deckImg" src="{{ url_for('static', filename='images/magicDeckHeader.png') }}" alt="deck pic">
+                  <span class="deckName">{{ user_deck.deck.deck_name }}</span>
+                  <div class="countShell">
+                    <span>Cards: </span><span class="deckCount">{{ user_deck.card_count }}</span>
+                  </div>
+                </div>
+                
             {% endfor %}
-        </ul>
     {% endif %}
-    </div>
-    <div class="deckStats"> 
-      <h2>Stats</h2>
-    </div>
   </section>
 </div>
 <div class="rotatingDisplay">

@@ -1,3 +1,4 @@
+from sqlalchemy import func
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -54,6 +55,14 @@ class User_Deck(db.Model):
 
     user = db.relationship('Username', foreign_keys=[user_id], backref='user_decks')
     deck = db.relationship('Deck', foreign_keys=[deck_id], backref='user_decks')
+
+    @property
+    def card_count(self):
+        return Deck_Card.query.filter_by(user_deck_id=self.id).count()
+
+    @classmethod
+    def get_decks_with_card_count(cls):
+        return cls.query.join(Deck_Card).group_by(cls.id).add_columns(func.count(Deck_Card.id).label('card_count')).all()
 
 
 

@@ -1,3 +1,49 @@
+*, *::before, *::after { box-sizing: border-box;}
+
+body{
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+span, p{
+    /* color: #00FA9A; */
+    color: white;
+}
+
+.headerTextShell{
+    position: relative;
+        right: 40px;
+}
+
+.homeHeader{
+    display: flex;
+    width: 70%;
+}
+
+.homeTitle, .headerDesc{
+    font-family: 'Outfit', sans-serif;
+}
+
+.headerDesc{
+    font-size: 18px;
+}
+
+.homeTitle{
+    color: white;
+    font-size: 54px;
+}
+
+.headerImg{
+    width: 360px;
+    height: 280px;
+    /* border: solid 1px red; */
+    background-image: url('/static/images/headerImg.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
 .testDeck{
     width: 10px;
     height: 10px;
@@ -6,12 +52,13 @@
 }
 
 .deckContainer{
-    border: solid 1px gray;
+    /* border: solid 1px gray; */
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 500px;
-    background-color: #E3655B;
+    /* justify-content: space-around; */
+    height:700px;
+    /* background-color: black; */
 }
 
 .deckNames, .deckStats{
@@ -19,8 +66,112 @@
     width: 200px;
 }
 
-.deckList{
+.deckForm, .deck-link{
+    height: 220px;
+    width: 250px;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #2C3648;
+}
+
+.deckForm{
+    border: dashed 1px #00FA9A;
+    margin-bottom: 30px;
+    background-image: url('/static/images/newDeckImg.png');
+    background-size: cover;
+}
+
+.deckForm label{
+    font-family: 'Handjet', sans-serif;
+    font-size: 30px;
+}
+
+.deckForm input {
+    opacity: 0.8; /* Adjust the value between 0 (completely transparent) and 1 (fully opaque) */
+}
+
+.deckForm p {
+    font-size: 20px;
+    margin: 5px; /* Adjust the margin between form elements */
+    display: flex;
+    flex-direction: column; /* or row, depending on your layout preference */
+    align-items: center;
+  }
+
+  button{
+    position: relative;
+    /* background-color: #310D20; */
+    background-color: rgba(49, 13, 32, 0.5);
+    color: #B2ABF2;
+    border-color: #B2ABF2;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    letter-spacing: 0.1em;
+    font-weight: 400;
+    padding: 10px 30px;
+    transition: 0.5s; 
+    width: 250px;
+  }
+
+  button:hover{
+    color: #71C9E8;
+    letter-spacing: 0.25em;
+    box-shadow: 0 0 35px #71C9E8;
+    cursor: pointer;
+  }
+
+.deckList{
+    width: 1200px;
+    height: 220px;
+    display: flex;
+    justify-content:space-between;
+}
+
+.deck-link{
+    border: solid 1px black;
+    border-radius: 15px;
+    /* padding: 10px; */
+}
+
+.deckImg{
+    width: 100%;
+    height: 40%;
+    margin-bottom: 10px;
+    object-fit: cover;
+    border-top-left-radius: 10px;  /* Border radius for the top-left corner */
+    border-top-right-radius: 10px;  /* Border radius for the top-right corner */
+}
+
+.deck-link:hover{
+    cursor: pointer;
+    /* height: 250px;
+    width: 280px; */
+    transform: scale(1.2);
+}
+
+.deck-link:hover .deckName{
+    color: #00FA9A;
+}
+
+.deck-link > span{
+    font-family: 'Handjet', sans-serif;
+}
+
+.countShell > span {
+    font-family: 'Handjet', sans-serif;
+    font-size: 30px;
+}
+
+.deckName{
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.deckCount{
+    font-size: 20px;
+    color: #00FA9A;
 }
 
 .rotatingDisplay{
