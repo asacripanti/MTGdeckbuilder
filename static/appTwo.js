@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const deckLinks = document.querySelectorAll('.deck-link');
     const cardImgs = document.querySelectorAll('.cardImg')
+    const deleteButtons = document.querySelectorAll('.deleteBtn');
     const searchDisplay = document.querySelector('.searchDisplay');
     const testDeck = document.querySelector('.testDeck');
     const searchResults = document.querySelector('.searchResults');
@@ -23,6 +24,17 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log('Clicked on deck with ID:', deckId);
         });
     });
+
+   
+    deleteButtons.forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            // Prevent the click event from propagating to the container
+            event.stopPropagation();
+
+            // Add any additional logic for handling the delete button click
+        });
+    });
+
 
     cardImgs.forEach(function (cardImg) {
         cardImg.addEventListener('click', function (event) {

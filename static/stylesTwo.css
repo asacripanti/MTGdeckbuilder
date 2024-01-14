@@ -99,7 +99,7 @@ span, p{
     align-items: center;
   }
 
-  button{
+  .newDeckSubmitBtn{
     position: relative;
     /* background-color: #310D20; */
     background-color: rgba(49, 13, 32, 0.5);

@@ -1,8 +1,8 @@
 """MTG deck builder APP"""
 
-from flask import Flask, render_template, request, url_for, session, redirect, jsonify
+from flask import Flask, render_template, request, url_for, session, redirect, jsonify, flash
 from flask_sqlalchemy import SQLAlchemy
-from forms import CardSearchForm, RegisterForm, CreateDeckForm, LoginForm
+from forms import CardSearchForm, RegisterForm, CreateDeckForm, LoginForm, DeleteDeckForm
 from models import db, Username, connect_db, User_Deck, Deck, Card, Deck_Card
 from services import get_user_id
 import requests 
@@ -88,6 +88,27 @@ def register_user():
                 return redirect(url_for('home_page'))
 
     return render_template('register.html', form=form) 
+
+
+@app.route('/delete_deck', methods=['POST'])
+def delete_deck():
+    deck_id = request.form.get('deck_id')
+    print(f'Here is the deck id: {deck_id}')
+    print(f'Form Data: {request.form}')
+
+    
+    if deck_id:
+        # Assuming User_Deck is your model for decks
+        deck = User_Deck.query.filter_by(deck_id=deck_id).first()
+        print(f'Here is the deck : {deck}')
+        if deck:
+            db.session.delete(deck)
+            db.session.commit()
+            flash('Deck deleted successfully', 'success')
+        else:
+            flash('Deck not found', 'error')
+
+    return redirect(url_for('home_page'))
    
 
 @app.route('/login', methods=['GET', 'POST'])

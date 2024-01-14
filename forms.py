@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField
+from wtforms import StringField, HiddenField
 from wtforms.validators import InputRequired
 
 class CardSearchForm(FlaskForm):
@@ -22,4 +22,8 @@ class CreateDeckForm(FlaskForm):
     """Form for creating new deck"""
 
     name = StringField("New Deck", validators=[InputRequired()])    
+
+
+class DeleteDeckForm(FlaskForm):    
+    deck_id = HiddenField('Deck ID')
 

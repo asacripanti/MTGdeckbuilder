@@ -28,9 +28,8 @@
            </p>
           
       {% endfor %}
-          <button type="submit">Submit</button>
+          <button class="newDeckSubmitBtn" type="submit">Submit</button>
     </form>
-  <img src="/../images/dragon.png" alt="">
   <section class="deckList">
     {% if deck_names %}
             {% for user_deck in user_deck_result %}
@@ -40,8 +39,11 @@
                   <div class="countShell">
                     <span>Cards: </span><span class="deckCount">{{ user_deck.card_count }}</span>
                   </div>
+                  <form class="deleteForm" action="/delete_deck" method="POST">
+                    <input type="hidden" name="deck_id" value="{{ user_deck.deck.id }}">
+                    <button type="submit" class="deleteBtn">Delete</button>
+                  </form>
                 </div>
-                
             {% endfor %}
     {% endif %}
   </section>
