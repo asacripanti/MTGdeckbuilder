@@ -2,9 +2,25 @@
 
 {% block content %}
 <div class="deckDisplay">
-    {% for deck_card in deck_cards %}
-        <img src="{{ deck_card.card.img_url }}" alt="{{ deck_card.card.card_name }}">
-    {% endfor %}    
+    {% if deck_cards %}
+        {% for deck_card in deck_cards %}
+            {% if deck_card and deck_card.card %}
+                <div class="card-container">
+                    <img src="{{ deck_card.card.img_url }}" alt="{{ deck_card.card.card_name }}">
+                    <form class="deleteCardForm" action="/delete_card" method="POST">
+                        <input type="hidden" name="card_id" value="{{ deck_card.card.id }}">
+                        <button type="submit" class="deleteCardBtn">Delete Card</button>
+                    </form>
+                </div>
+            {% else %}
+                <!-- Handle the case when deck_card or deck_card.card is undefined -->
+                <p>Card not found</p>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <!-- Handle the case when deck_cards is empty -->
+        <p>No cards in the deck</p>
+    {% endif %}
 </div>
 <a href="{{ url_for('card_search') }}">Search for new cards!</a>
 {% endblock %}

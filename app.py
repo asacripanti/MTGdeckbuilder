@@ -109,8 +109,20 @@ def delete_deck():
             flash('Deck not found', 'error')
 
     return redirect(url_for('home_page'))
-   
 
+@app.route('/delete_card', methods=['POST'])    
+def delete_card():
+    card_id = request.form.get('card_id')
+    
+    if card_id:
+        card = Deck_Card.query.filter_by(card_id=card_id).first()
+
+        if card:
+            db.session.delete(card)
+            db.session.commit()
+
+    return redirect(url_for('deck_display', deck_id=session.get('deck_id')))        
+ 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """Allows user to login"""
