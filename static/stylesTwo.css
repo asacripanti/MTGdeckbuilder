@@ -52,13 +52,11 @@ span, p{
 }
 
 .deckContainer{
-    /* border: solid 1px gray; */
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: space-around; */
+    width: 1200px;
     height:700px;
-    /* background-color: black; */
 }
 
 .deckNames, .deckStats{
@@ -76,7 +74,7 @@ span, p{
 }
 
 .deckForm{
-    border: dashed 1px #00FA9A;
+    border: dashed 1px white;
     margin-bottom: 30px;
     background-image: url('/static/images/newDeckImg.png');
     background-size: cover;
@@ -103,8 +101,8 @@ span, p{
     position: relative;
     /* background-color: #310D20; */
     background-color: rgba(49, 13, 32, 0.5);
-    color: #B2ABF2;
-    border-color: #B2ABF2;
+    color: white;
+    border-color: white;
     text-decoration: none;
     text-transform: uppercase;
     font-size: 1.2em;
@@ -115,10 +113,12 @@ span, p{
     width: 250px;
   }
 
-  button:hover{
-    color: #71C9E8;
+  .newDeckSubmitBtn:hover{
+    /* color: #71C9E8; */
+    color: #00FA9A;
+    border-color: #00FA9A;
     letter-spacing: 0.25em;
-    box-shadow: 0 0 35px #71C9E8;
+    box-shadow: 0 0 35px #00FA9A;
     cursor: pointer;
   }
 
@@ -133,6 +133,19 @@ span, p{
     border: solid 1px black;
     border-radius: 15px;
     /* padding: 10px; */
+}
+
+.deleteDeckBtn, .deleteCardBtn{
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+
+.deleteDeckBtn:hover,
+.deleteCardBtn:hover{
+    color: #E94F37;
+    letter-spacing: 0.25em;
 }
 
 .deckImg{
@@ -178,3 +191,47 @@ span, p{
     height: 40px;
     background-color: red;
 }
+
+.deckDisplay, .searchDisplay{
+    display: flex;
+    flex-wrap: wrap;
+    width: 1200px;
+    /* height: 700px; */
+}
+
+.deckHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1200px;
+}
+
+.searchLink, .homeLink{
+    color: white;
+    font-size: 30px;
+    text-decoration: none;
+    margin: auto;
+}
+
+.searchLink:hover,
+.homeLink:hover{
+    color: #00FA9A;
+    cursor: pointer;
+}
+
+.cardImg, .cardImgSearch{
+    width: 265px;
+    height: 375px;
+    margin: 10px;
+}
+
+.cardImg:hover, 
+.cardImgSearch:hover{
+    transform: scale(1.2);
+}
+
+.cardAdded{
+    box-shadow: -10px 10px 35px #00FA9A;
+    transition: box-shadow 1s ease;
+}
+

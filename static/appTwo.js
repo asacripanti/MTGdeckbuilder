@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     const deckLinks = document.querySelectorAll('.deck-link');
-    const cardImgs = document.querySelectorAll('.cardImg')
+    const cardImgsSearch = document.querySelectorAll('.cardImgSearch')
     const deleteButtons = document.querySelectorAll('.deleteBtn');
+    const newDeckSubmitBtn = document.querySelector('.newDeckSubmitBtn');
+    const deckForm = document.querySelector('.deckForm');
     const searchDisplay = document.querySelector('.searchDisplay');
     const testDeck = document.querySelector('.testDeck');
     const searchResults = document.querySelector('.searchResults');
@@ -35,16 +37,31 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    if(newDeckSubmitBtn){
+            newDeckSubmitBtn.addEventListener('mouseover', function() {
+            deckForm.style.borderColor = '#00FA9A';
+        });
+    
+            newDeckSubmitBtn.addEventListener('mouseout', function() {
+            deckForm.style.borderColor = 'white'; // Reset the border color
+        });
+    }
 
-    cardImgs.forEach(function (cardImg) {
-        cardImg.addEventListener('click', function (event) {
-            if (event.target.classList.contains('cardImg')) {
+
+
+    cardImgsSearch.forEach(function (cardImgSearch) {
+        cardImgSearch.addEventListener('click', function (event) {
+            if (event.target.classList.contains('cardImgSearch')) {
                 // const detailApiUrl = `https://api.magicthegathering.io/v1/cards?name=${cardName}`;
-                const cardName = cardImg.alt;
-                const cardType = cardImg.dataset.type;
-                const cardColor = cardImg.dataset.color;
-                const cmc = parseInt(cardImg.dataset.cmc);
-                const imgUrl = cardImg.src;
+                const cardName = cardImgSearch.alt;
+                const cardType = cardImgSearch.dataset.type;
+                const cardColor = cardImgSearch.dataset.color;
+                const cmc = parseInt(cardImgSearch.dataset.cmc);
+                const imgUrl = cardImgSearch.src && cardImgSearch.src !== 'http://127.0.0.1:5000/search' ? cardImgSearch.src : 'https://m.media-amazon.com/images/I/51ESinUELIL.__AC_SX300_SY300_QL70_FMwebp_.jpg';
+                console.log('here is the img url:')
+                console.log(imgUrl);
+
+                cardImgSearch.classList.add('cardAdded');
 
                 const cardObject = {
                     name: cardName,
