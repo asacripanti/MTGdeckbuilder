@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>SEARCH ROUTE</h1>
-<form action="{{ url_for('card_search') }}" method="POST">
+<section class="searchHeader">
+  <a class="homeLink" href="{{ url_for('home_page')}}">Home</a>
+  <a class="deckViewLink" href="{{ url_for('deck_display', deck_id=deck_id) }}">Back to deck</a>
+</section>
+<form class="searchForm" action="{{ url_for('card_search') }}" method="POST">
     {{form.hidden_tag() }}
     {% for field in form
     if field.widget.input_type != 'hidden' %}
         <p>
             {{field.label}}
-            {{field}}
+            {{ field(placeholder='Card name') }}
         
             {% for err in field.errors %} 
             {{err}}

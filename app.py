@@ -56,9 +56,7 @@ def home_page():
         .filter(User_Deck.user_id == user_id)
     )    
     user_decks_result = user_decks_query.all()
-    print(str(user_decks_query))
     deck_names = [user_deck.deck.deck_name for user_deck in user_decks_query]
-    print("Deck Names:", deck_names)
             
     return render_template('home.html', form=form, username=username, user_id=user_id, deck_id=deck_id, deck_names=deck_names, user_deck_result=user_decks_result)
 
@@ -93,14 +91,10 @@ def register_user():
 @app.route('/delete_deck', methods=['POST'])
 def delete_deck():
     deck_id = request.form.get('deck_id')
-    print(f'Here is the deck id: {deck_id}')
-    print(f'Form Data: {request.form}')
-
     
     if deck_id:
         # Assuming User_Deck is your model for decks
         deck = User_Deck.query.filter_by(deck_id=deck_id).first()
-        print(f'Here is the deck : {deck}')
         if deck:
             db.session.delete(deck)
             db.session.commit()
@@ -132,8 +126,7 @@ def login():
     if form.validate_on_submit():
         username = form.username.data
         user_id = get_user_id(username)
-        print(f"here is your username {username}")
-
+        
         if user_id is not None:
             session['logged_in'] = True
             session['username'] = username
@@ -187,19 +180,15 @@ def card_search():
                 card_data = response.json().get('cards', [])
 
                 for card in card_data:
-                    print(f"Card Name: {card.get('name')}")
-                    print(f"Card Type: {card.get('type')}")
-                    print(f"Mana Cost: {card.get('manaCost')}")
-                    print(f"Color: {card.get('colorIdentity')}")
-                    print(card_data)
-                    # Add more fields as needed
+                    if 'imageUrl' not in card:
+                        card['imageUrl'] = 'static/images/deckLogo.png'
 
             except requests.exceptions.RequestException as e:
                 print(f"Error making API request: {e}")
             # Additional actions can be added here
 
         # Render the home template with the form
-        return render_template('search.html', form=form, card_data=card_data)
+        return render_template('search.html', form=form, card_data=card_data, deck_id=session.get('deck_id'))
     
     # If the user is not logged in, redirect to the register page
     else:

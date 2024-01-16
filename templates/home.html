@@ -13,7 +13,7 @@
   </div>
 </section>
 <div class="deckContainer">
-  <p>Welcome, {{ username }}! Your user ID is {{ user_id }}. <a href="{{ url_for('logout') }}">Logout</a></p>
+  <p class="welcomeMsg">Welcome, {{ username }}! <a class="logoutLink" href="{{ url_for('logout') }}">Logout</a></p>
     <form class="deckForm" action="/" method="POST">
       {{form.hidden_tag() }}
       {% for field in form
@@ -40,7 +40,7 @@
                     <span>Cards: </span><span class="deckCount">{{ user_deck.card_count }}</span>
                   </div>
                   <form class="deleteForm" action="/delete_deck" method="POST">
-                    <input type="hidden" name="deck_id" value="/delete_card">
+                    <input type="hidden" name="deck_id" value="{{ user_deck.deck.id }}">
                     <button type="submit" class="deleteDeckBtn">Delete</button>
                   </form>
                 </div>
@@ -48,9 +48,4 @@
     {% endif %}
   </section>
 </div>
-<div class="rotatingDisplay">
-
-
-</div>
-
 {% endblock %}

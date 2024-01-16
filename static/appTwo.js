@@ -1,13 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
     const deckLinks = document.querySelectorAll('.deck-link');
     const cardImgsSearch = document.querySelectorAll('.cardImgSearch')
-    const deleteButtons = document.querySelectorAll('.deleteBtn');
+    const deleteButtons = document.querySelectorAll('.deleteDeckBtn');
     const newDeckSubmitBtn = document.querySelector('.newDeckSubmitBtn');
     const deckForm = document.querySelector('.deckForm');
-    const searchDisplay = document.querySelector('.searchDisplay');
-    const testDeck = document.querySelector('.testDeck');
-    const searchResults = document.querySelector('.searchResults');
-    
+  
     const deck = [];
 
     deckLinks.forEach(function (deckLink) {
@@ -57,10 +54,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 const cardType = cardImgSearch.dataset.type;
                 const cardColor = cardImgSearch.dataset.color;
                 const cmc = parseInt(cardImgSearch.dataset.cmc);
-                const imgUrl = cardImgSearch.src && cardImgSearch.src !== 'http://127.0.0.1:5000/search' ? cardImgSearch.src : 'https://m.media-amazon.com/images/I/51ESinUELIL.__AC_SX300_SY300_QL70_FMwebp_.jpg';
-                console.log('here is the img url:')
-                console.log(imgUrl);
-
+                const imgUrl = cardImgSearch.src;
+               
                 cardImgSearch.classList.add('cardAdded');
 
                 const cardObject = {
@@ -73,10 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
 
                 deck.push(cardObject);
-                console.log('Clicked!');
-                console.log(deck);
-
-
+                
                 fetch('/add_card', {
                     method: 'POST',
                     headers: {

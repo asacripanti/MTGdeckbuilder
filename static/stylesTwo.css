@@ -35,6 +35,19 @@ span, p{
     font-size: 54px;
 }
 
+.welcomeMsg{
+    font-family: 'Outfit', sans-serif;;
+}
+
+.logoutLink{
+    color: white;
+}
+
+.logoutLink:hover{
+    color: #00FA9A;
+    cursor: pointer;
+}
+
 .headerImg{
     width: 360px;
     height: 280px;
@@ -80,7 +93,19 @@ span, p{
     background-size: cover;
 }
 
-.deckForm label{
+.searchForm{
+    border: solid 1px white;
+    border-bottom: none;
+    width: 250px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.deckForm label,
+.searchForm label{
     font-family: 'Handjet', sans-serif;
     font-size: 30px;
 }
@@ -89,7 +114,8 @@ span, p{
     opacity: 0.8; /* Adjust the value between 0 (completely transparent) and 1 (fully opaque) */
 }
 
-.deckForm p {
+.deckForm p,
+.searchForm p {
     font-size: 20px;
     margin: 5px; /* Adjust the margin between form elements */
     display: flex;
@@ -97,10 +123,11 @@ span, p{
     align-items: center;
   }
 
-  .newDeckSubmitBtn{
+  .newDeckSubmitBtn,
+  .searchForm button{
     position: relative;
     /* background-color: #310D20; */
-    background-color: rgba(49, 13, 32, 0.5);
+    background-color: black;
     color: white;
     border-color: white;
     text-decoration: none;
@@ -113,7 +140,8 @@ span, p{
     width: 250px;
   }
 
-  .newDeckSubmitBtn:hover{
+  .newDeckSubmitBtn:hover,
+  .searchForm button:hover{
     /* color: #71C9E8; */
     color: #00FA9A;
     border-color: #00FA9A;
@@ -124,14 +152,18 @@ span, p{
 
 .deckList{
     width: 1200px;
-    height: 220px;
+    /* height: 220px; */
     display: flex;
+    flex-wrap: wrap;
     justify-content:space-between;
 }
 
 .deck-link{
     border: solid 1px black;
     border-radius: 15px;
+    width: 250px;
+    height: 220px;
+    margin-bottom: 10px;
     /* padding: 10px; */
 }
 
@@ -199,14 +231,14 @@ span, p{
     /* height: 700px; */
 }
 
-.deckHeader{
+.deckHeader, .searchHeader{
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 1200px;
 }
 
-.searchLink, .homeLink{
+.searchLink, .deckViewLink, .homeLink{
     color: white;
     font-size: 30px;
     text-decoration: none;
@@ -214,6 +246,7 @@ span, p{
 }
 
 .searchLink:hover,
+.deckViewLink:hover,
 .homeLink:hover{
     color: #00FA9A;
     cursor: pointer;
