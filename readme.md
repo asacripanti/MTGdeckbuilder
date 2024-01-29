@@ -1,33 +1,24 @@
 # MTG - Deckbuilder
 
+This is MTG - Deckbuilder! A full-stack web app that allows you to look up cards so you can create and save your own custom deck. 
+
 ## Table of contents
 
 - [MTG - Deckbuilder](#mtg---deckbuilder)
   - [Table of contents](#table-of-contents)
+    - [Why?](#why)
     - [Screenshot](#screenshot)
-    - [Links](#links)
     - [Built with](#built-with)
     - [What I learned](#what-i-learned)
     - [Continued development](#continued-development)
   - [Author](#author)
 
-Users should be able to:
-
-- Add their email and submit the form
-- See a success message with their email after successfully submitting the form
-- See form validation messages if:
-  - The field is left empty
-  - The email address is not formatted correctly
-- View the optimal layout for the interface depending on their device's screen size
-- See hover and focus states for all interactive elements on the page
+### Why?
+My wife and her siblings and I all play Magic the gathering at home. I create all the decks for everyone to use and update the decks too. It didn't take long for me to start forgetting which cards ended up in which deck. Rather than look through 6 100 cards deck, I decided to create MTG - Deckbuilder! MTG - Deckbuilder allows me to create a deck by looking up and add cards to my deck with the Magic the gathering API. I then can come back and look at my deck or decks anytime I want since all this info is stored in a database. 
 
 ### Screenshot
 
-![Overlook of project](assets/images/completeScreenshot.png)
-
-### Links
-
-- Live Site URL: https://asacripanti.github.io/newsLetterSignUp/
+![Overlook of project](static/images/mtgUpdateHomeStatic.png)
 
 
 ### Built with
