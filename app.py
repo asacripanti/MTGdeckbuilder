@@ -8,6 +8,7 @@ from services import get_user_id
 import requests 
 from flask_migrate import Migrate
 
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "secret"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/deck_builder'
