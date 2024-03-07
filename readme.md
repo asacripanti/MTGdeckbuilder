@@ -20,7 +20,7 @@ My wife and her siblings and I all play Magic the gathering at home. I create al
 ### Screenshot
 
 ![Overlook of project](static/images/mtgUpdateHomeStatic.png) 
-(static/images/cardSearch.png)
+![Cardsearh image](static/images/cardSearch.png)
 
 
 
@@ -50,8 +50,9 @@ My wife and her siblings and I all play Magic the gathering at home. I create al
 
 ## Database Setup
 
-1. Create a PostgreSQL database: `createdb myapp_db`
-2. Run migrations: `flask db upgrade`
+1. Make sure you have installed the dependencies from the last step of the setup.
+2. In your terminal windoow,create a PostgreSQL database by running this command:     `createdb myapp_db`
+3. Then run this command Run migrations: `flask db upgrade`
 
 ## Running the Application
 
