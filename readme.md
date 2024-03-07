@@ -19,7 +19,9 @@ My wife and her siblings and I all play Magic the gathering at home. I create al
 
 ### Screenshot
 
-![Overlook of project](static/images/mtgUpdateHomeStatic.png)
+![Overlook of project](static/images/mtgUpdateHomeStatic.png) 
+(static/images/cardSearch.png)
+
 
 
 ### Built with
@@ -37,12 +39,14 @@ My wife and her siblings and I all play Magic the gathering at home. I create al
 
 ## Setup
 
-1. Clone the repository.
-2. Set up a virtual environment: `python -m venv venv`
-3. Activate the virtual environment:
+1. Clone the repository from the Github repo:https://github.com/asacripanti/MTGdeckbuilder/tree/capstone , make sure to clone from the capstone branch.
+2. Open your terminal, navigate to where you want the project to be nested. 
+3. Type the following steps in your terminal window.
+4. Set up a virtual environment: `python -m venv venv`
+5. Activate the virtual environment:
     - On Windows: `venv\Scripts\activate`
     - On Unix or MacOS: `source venv/bin/activate`
-4. Install dependencies: `pip install -r requirements.txt`
+6. Install dependencies: `pip install -r requirements.txt`
 
 ## Database Setup
 
@@ -51,8 +55,9 @@ My wife and her siblings and I all play Magic the gathering at home. I create al
 
 ## Running the Application
 
-
-flask run
+1. Open your terminal window and navigate to where the project is located. 
+2. Make sure you have your virtual environment running(review step 5 in setup) and run the follwing command in your terminal `flask run`
+3. Copy the url provided from the terminal window and paste it into your internet browser. (url should look something like this: http://127.0.0.1:5000)
 
 
 
